@@ -20,22 +20,6 @@ jobs:
           id
         shell: bash
 
-      - name: Set passwd to outputs
-        id: passwd2204
-        run: |
-          echo 'passwd2204<<EOF' >> $GITHUB_OUTPUT
-          cat /etc/passwd >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-        shell: bash
-
-      - name: Set group to outputs
-        id: group2204
-        run: |
-          echo 'group2204<<EOF' >> $GITHUB_OUTPUT
-          cat /etc/group >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-        shell: bash
-
   id2004:
     runs-on: ubuntu-20.04
     steps:
@@ -45,18 +29,4 @@ jobs:
         run: |
           id
         shell: bash
-
-      - name: Diff passwd 2204 and 2004
-        run: |
-          diff /etc/passwd <(echo "${PASSWD2204}") || true
-        shell: bash
-        env:
-          PASSWD2204: ${{needs.id2204.outputs.passwd2204}}
-
-      - name: Diff group 2204 and 2004
-        run: |
-          diff /etc/group <(echo "${GROUP2204}") || true
-        shell: bash
-        env:
-          GROUP2204: ${{needs.id2204.outputs.group2204}}
 
