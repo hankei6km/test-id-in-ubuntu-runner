@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       passwd2204: ${{ steps.passwd2204.outputs.passwd2204 }}
+      group2204: ${{ steps.group2204.outputs.group2204 }}
+
     steps:
       - uses: actions/checkout@v3
 
@@ -23,6 +25,14 @@ jobs:
         run: |
           echo 'passwd2204<<EOF' >> $GITHUB_OUTPUT
           cat /etc/passwd >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Set group to outputs
+        id: group2204
+        run: |
+          echo 'group2204<<EOF' >> $GITHUB_OUTPUT
+          cat /etc/group >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
         shell: bash
 
@@ -43,4 +53,11 @@ jobs:
         shell: bash
         env:
           PASSWD2204: ${{needs.id2204.outputs.passwd2204}}
+
+      - name: Diff group 2204 and 2004
+        run: |
+          diff /etc/group <(echo "${GROUP2204}") || true
+        shell: bash
+        env:
+          GROUP2204: ${{needs.id2204.outputs.group2204}}
 
