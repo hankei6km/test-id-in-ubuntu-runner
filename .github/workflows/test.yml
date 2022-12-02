@@ -39,7 +39,7 @@ jobs:
 
       - name: Diff passwd 2204 and 2004
         run: |
-          diff /etc/passwd <(echo "${PASSWD2204}")
+          diff /etc/passwd <(echo "${PASSWD2204}") || true
         shell: bash
         env:
           PASSWD2204: ${{needs.id2204.outputs.passwd2204}}
