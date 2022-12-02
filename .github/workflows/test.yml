@@ -21,7 +21,9 @@ jobs:
       - name: Set passwd to outputs
         id: passwd2204
         run: |
-          (echo "passwd2204=<<EOF" && cat /etc/passwd && echo EOF) >> $GITHUB_OUTPUT
+          echo 'passwd2204=<<EOF' >> $GITHUB_OUTPUT
+          cat /etc/passwd >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
         shell: bash
 
   id2004:
