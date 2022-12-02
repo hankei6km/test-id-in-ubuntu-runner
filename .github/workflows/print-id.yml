@@ -1,4 +1,4 @@
-name: test
+name: print-id
 on:
   push:
     branches:
