@@ -1,0 +1,44 @@
+name: test
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  id2204:
+    runs-on: ubuntu-22.04
+    outputs:
+      passwd2204: ${{ steps.passwd2204.outputs.passwd2204 }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Display id in ubuntu-22.04
+        run: |
+          id
+        shell: bash
+
+      - name: Set passwd to outputs
+        id: passwd2204
+        run: |
+          (echo "passwd2204=<<EOF" && cat /etc/passwd && echo EOF) >> $GITHUB_OUTPUT
+        shell: bash
+
+  id2004:
+    runs-on: ubuntu-22.04
+    needs: id2204
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Display id in ubuntu-20.04
+        run: |
+          id
+        shell: bash
+
+      - name: Diff passwd 2204 and 2004
+        run: |
+          diff /etc/passwd <(echo "${PASSWD2204}")
+        shell: bash
+        env:
+          PASSWD2204: ${{needs.id2204.outputs.passwd2204}}
+
