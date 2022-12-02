@@ -49,9 +49,9 @@ jobs:
         shell: bash
 
       - name: Set group to outputs
-        id: group2204
+        id: group2004
         run: |
-          echo 'group2204<<EOF' >> $GITHUB_OUTPUT
+          echo 'group2004<<EOF' >> $GITHUB_OUTPUT
           cat /etc/group >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
         shell: bash
