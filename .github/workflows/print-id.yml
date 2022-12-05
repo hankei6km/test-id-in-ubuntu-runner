@@ -38,7 +38,7 @@ jobs:
 
       - name: grep gid
         run: |
-          docker run --rm alpine:latest grep 122 /etc/group
+          docker run --rm alpine:latest grep 122 /etc/group || echo "not found"
           echo ---
           docker run --rm alpine:latest grep 123 /etc/group
         shell: bash
