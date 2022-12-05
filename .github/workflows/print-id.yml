@@ -30,3 +30,16 @@ jobs:
           id
         shell: bash
 
+
+  alpine-gid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: grep gid
+        run: |
+          docker run --rm alpine:latest grep 122 /etc/group
+          echo ---
+          docker run --rm alpine:latest grep 123 /etc/group
+        shell: bash
+
