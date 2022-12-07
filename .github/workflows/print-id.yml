@@ -1,0 +1,45 @@
+name: print-id
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  id2204:
+    runs-on: ubuntu-22.04
+    outputs:
+      passwd2204: ${{ steps.passwd2204.outputs.passwd2204 }}
+      group2204: ${{ steps.group2204.outputs.group2204 }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Display id in ubuntu-22.04
+        run: |
+          id
+        shell: bash
+
+  id2004:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Display id in ubuntu-20.04
+        run: |
+          id
+        shell: bash
+
+
+  alpine-gid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: grep gid
+        run: |
+          docker run --rm alpine:latest grep 122 /etc/group || echo "not found"
+          echo ---
+          docker run --rm alpine:latest grep 123 /etc/group
+        shell: bash
+
